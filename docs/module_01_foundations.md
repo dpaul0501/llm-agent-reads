@@ -269,8 +269,8 @@ This identity does not assume the tokens are independent. A decoder-only languag
 
 ```mermaid
 flowchart LR
-    C[Start] -->|P(cat) = 0.2| A[cat]
-    A -->|P(sleeps given cat) = 0.4| B[cat sleeps]
+    C[Start] -->|"P(cat) = 0.2"| A[cat]
+    A -->|"P(sleeps given cat) = 0.4"| B[cat sleeps]
     B --> J[Joint probability = 0.2 × 0.4 = 0.08]
 ```
 
