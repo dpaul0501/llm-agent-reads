@@ -1,23 +1,23 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Frequency and rotation lab</title><link rel="stylesheet" href="lab.css"></head>
-<body><main class="lab"><h1>Frequency and rotation lab</h1><p class="muted">A token position becomes an angle. Compare how quickly sine and cosine change, then inspect the RoPE-style relative dot product.</p>
+<body><main class="lab"><h1>Frequency and rotation lab</h1><p class="muted">For a 64-dimensional vector, choose pair k and see how its frequency controls sinusoidal position codes and RoPE rotation.</p>
 <div class="grid"><section class="panel"><h2>Position and frequency</h2>
-<label class="control">Angular frequency ω <span id="omega-out"></span><input id="omega" type="range" min="0.05" max="1" step="0.01" value="0.1"></label>
+<label class="control">Pair index k <span id="pair-out"></span><input id="pair" type="range" min="0" max="31" step="1" value="8"></label>
 <label class="control">Position m <span id="pos-out"></span><input id="pos" type="range" min="0" max="30" step="1" value="8"></label>
 <label class="control">Relative offset Δ <span id="delta-out"></span><input id="delta" type="range" min="0" max="20" step="1" value="4"></label>
 <div class="canvas-wrap"><canvas id="circle" width="300" height="250" aria-label="Unit circle with the position angle"></canvas></div>
 <div class="readout formula" id="numbers" aria-live="polite"></div></section>
 <section class="panel"><h2>Waves across token positions</h2><div class="canvas-wrap"><canvas id="waves" width="680" height="260" aria-label="Sine and cosine values across 50 positions"></canvas></div>
-<p class="muted">Blue: sine; orange: cosine. Vertical markers show positions m and m+Δ. The pair repeats after about 2π/ω token steps.</p>
+<p class="muted">Blue: sine; orange: cosine. Vertical markers show positions m and m+Δ. Increase k to lower the frequency and lengthen the period.</p>
 <div class="readout formula" id="dot"></div><p class="muted">For fixed 2D vectors q=k=[1,0], rotating them at m and m+Δ gives dot product cos(ωΔ). Shift both positions by 7: the dot product remains the same.</p></section></div></main>
 <script>
-const els=Object.fromEntries(['omega','pos','delta'].map(id=>[id,document.getElementById(id)]));
+const els=Object.fromEntries(['pair','pos','delta'].map(id=>[id,document.getElementById(id)]));
 function render(){
-  const omega=Number(els.omega.value),m=Number(els.pos.value),delta=Number(els.delta.value),n=m+delta;
-  document.getElementById('omega-out').textContent=omega.toFixed(2)+' rad/token';
+  const pair=Number(els.pair.value),omega=10000**(-2*pair/64),m=Number(els.pos.value),delta=Number(els.delta.value),n=m+delta;
+  document.getElementById('pair-out').textContent=pair+' → dimensions '+(2*pair)+', '+(2*pair+1);
   document.getElementById('pos-out').textContent=m;
   document.getElementById('delta-out').textContent=delta;
-  document.getElementById('numbers').textContent='phase at m = '+(omega*m).toFixed(2)+' rad  |  period ≈ '+(2*Math.PI/omega).toFixed(1)+' tokens  |  (cos, sin) = ('+Math.cos(omega*m).toFixed(3)+', '+Math.sin(omega*m).toFixed(3)+')';
+  document.getElementById('numbers').textContent='ω_k = '+omega.toExponential(3)+' rad/token  |  phase at m = '+(omega*m).toFixed(3)+' rad  |  period ≈ '+(2*Math.PI/omega).toFixed(1)+' tokens  |  [sin, cos] = ['+Math.sin(omega*m).toFixed(3)+', '+Math.cos(omega*m).toFixed(3)+']';
   const value=Math.cos(omega*delta);
   document.getElementById('dot').textContent='dot(m, m+Δ) = cos('+omega.toFixed(2)+' × '+delta+') = '+value.toFixed(3)+';  dot(m+7, m+Δ+7) = '+value.toFixed(3);
   drawCircle(omega*m,omega*n);drawWaves(omega,m,n);
@@ -47,5 +47,5 @@ function drawWaves(omega,m,n){
   }
   ctx.fillStyle='#45556c';ctx.font='12px system-ui';ctx.fillText('0',left,251);ctx.fillText('50 tokens',right-55,251);
 }
-['omega','pos','delta'].forEach(id=>els[id].addEventListener('input',render));render();
+['pair','pos','delta'].forEach(id=>els[id].addEventListener('input',render));render();
 </script></body></html>

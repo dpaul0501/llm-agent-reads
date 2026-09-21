@@ -175,8 +175,8 @@
         ctx.lineTo(width - pad, height - pad);
         ctx.stroke();
 
-        const dims = [0, 2, 4, 6];
-        dims.forEach((k, index) => {
+        const pairs = [0, 1, 2, 3];
+        pairs.forEach((k, index) => {
           ctx.beginPath();
           ctx.strokeStyle = ['#4ea8de', '#46b483', '#f2a65a', '#8f6ad7'][index % 4];
           ctx.lineWidth = 2.25;
@@ -201,15 +201,14 @@
         ctx.fill();
 
         const vals = [];
-        for (let i = 0; i < 8; i += 1) {
-          const omega = 1 / (10000 ** (2 * i / 8));
-          const value = i % 2 === 0 ? Math.sin(pos * omega) : Math.cos(pos * omega);
-          vals.push(value.toFixed(2));
+        for (let k = 0; k < 4; k += 1) {
+          const omega = 1 / (10000 ** (2 * k / 8));
+          vals.push(Math.sin(pos * omega).toFixed(2));
+          vals.push(Math.cos(pos * omega).toFixed(2));
         }
 
         vectorBox.innerHTML = '[ ' + vals.join(', ') + ' ]';
 
-        const phase = Math.atan2(Math.cos(pos * (1 / (10000 ** (0 / 8)))), Math.sin(pos * (1 / (10000 ** (0 / 8)))));
         interpretation.innerHTML = `At position ${pos}, each dimension rotates with a different frequency. The signal is smooth, repeating, and distinct for nearby positions. The model sees this as a structured geometric code, not just a label.`;
       }
 
