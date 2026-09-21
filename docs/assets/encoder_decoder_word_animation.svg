@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="520" viewBox="0 0 1200 520">
+  <defs>
+    <style>
+      .title { font: 700 28px Arial, sans-serif; fill: #1f2937; }
+      .label { font: 600 20px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 500 16px Arial, sans-serif; fill: #475569; }
+      .input { fill: #edf6ff; stroke: #4ea8de; stroke-width: 2; }
+      .enc { fill: #edfdf7; stroke: #46b483; stroke-width: 2; }
+      .dec { fill: #fff5e8; stroke: #f2a65a; stroke-width: 3; }
+      .out { fill: #f4f0ff; stroke: #8f6ad7; stroke-width: 2; }
+      .arrow { stroke: #475569; stroke-width: 3; fill: none; marker-end: url(#arrowhead); }
+      .pulse { opacity: 0.35; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="42" text-anchor="middle" class="title">A word is processed through encoder and decoder</text>
+
+  <g>
+    <rect x="70" y="120" width="150" height="70" rx="16" class="input"/>
+    <text x="145" y="165" text-anchor="middle" class="label">The</text>
+    <animate attributeName="fill" values="#edf6ff;#dfeeff;#edf6ff" dur="2s" repeatCount="indefinite"/>
+  </g>
+
+  <path d="M220 155 H 300" class="arrow"/>
+
+  <g>
+    <rect x="300" y="90" width="210" height="130" rx="18" class="enc"/>
+    <text x="405" y="135" text-anchor="middle" class="label">Encoder</text>
+    <text x="405" y="170" text-anchor="middle" class="small">embedding</text>
+    <text x="405" y="195" text-anchor="middle" class="small">+ position</text>
+    <animate attributeName="stroke-width" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+  </g>
+
+  <path d="M510 155 H 600" class="arrow"/>
+
+  <g>
+    <rect x="600" y="90" width="220" height="130" rx="18" class="dec"/>
+    <text x="710" y="135" text-anchor="middle" class="label">Decoder</text>
+    <text x="710" y="170" text-anchor="middle" class="small">attends to past context</text>
+    <text x="710" y="195" text-anchor="middle" class="small">and emits next token</text>
+    <animate attributeName="stroke-width" values="3;5;3" dur="2s" repeatCount="indefinite"/>
+  </g>
+
+  <path d="M820 155 H 920" class="arrow"/>
+
+  <g>
+    <rect x="920" y="120" width="180" height="70" rx="16" class="out"/>
+    <text x="1010" y="165" text-anchor="middle" class="label">“sat”</text>
+    <animate attributeName="fill" values="#f4f0ff;#e8e3ff;#f4f0ff" dur="2s" repeatCount="indefinite"/>
+  </g>
+
+  <g>
+    <circle cx="405" cy="320" r="40" fill="#dff7ee" stroke="#46b483" stroke-width="2"/>
+    <text x="405" y="328" text-anchor="middle" class="label">Q</text>
+  </g>
+
+  <g>
+    <circle cx="520" cy="320" r="40" fill="#eaf4ff" stroke="#4ea8de" stroke-width="2"/>
+    <text x="520" y="328" text-anchor="middle" class="label">K</text>
+  </g>
+
+  <g>
+    <circle cx="635" cy="320" r="40" fill="#fff1dc" stroke="#f2a65a" stroke-width="2"/>
+    <text x="635" y="328" text-anchor="middle" class="label">V</text>
+  </g>
+
+  <path d="M445 320 H 480" class="arrow"/>
+  <path d="M560 320 H 595" class="arrow"/>
+
+  <text x="520" y="390" text-anchor="middle" class="small">attention uses the similarity between query and key</text>
+  <text x="520" y="420" text-anchor="middle" class="small">then weights the value vector</text>
+
+  <g>
+    <path d="M55 255 C 300 255, 450 260, 600 255 S 980 230, 1120 255" stroke="#8f6ad7" stroke-width="2.5" fill="none" stroke-dasharray="8 8" opacity="0.6">
+      <animate attributeName="stroke-dashoffset" from="0" to="100" dur="4s" repeatCount="indefinite"/>
+    </path>
+  </g>
+</svg>

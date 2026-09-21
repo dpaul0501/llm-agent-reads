@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Attention routing lab</title><link rel="stylesheet" href="lab.css"></head>
+<body><main class="lab"><h1>Attention routing lab</h1><p class="muted">Each table cell is a query–key dot product after softmax. Adjust one query and inspect its weighted value output.</p>
+<div class="grid"><section class="panel"><h2>Choose a query</h2>
+<label for="row"><strong>Query token</strong></label><select id="row"><option value="0">token 0</option><option value="1" selected>token 1</option><option value="2">token 2</option></select>
+<label class="control">Query x <span id="qx-out"></span><input id="qx" type="range" min="-2" max="2" step="0.1" value="0"></label>
+<label class="control">Query y <span id="qy-out"></span><input id="qy" type="range" min="-2" max="2" step="0.1" value="1"></label>
+<label class="control">Temperature <span id="tau-out"></span><input id="tau" type="range" min="0.3" max="3" step="0.1" value="1"></label>
+<label><input id="causal" type="checkbox" checked> Apply causal mask (hide future keys)</label>
+<div class="readout formula" id="inputs"></div></section>
+<section class="panel"><h2>Attention weight matrix</h2><table><thead><tr><th>query \ key</th><th>key 0</th><th>key 1</th><th>key 2</th></tr></thead><tbody id="matrix"></tbody></table>
+<div class="readout formula" id="readout" aria-live="polite"></div><p class="muted">A row sums to one. Masked cells receive zero weight. The output mixes the value vectors using the selected row's weights.</p></section></div></main>
+<script>
+const baseQ=[[1,0],[0,1],[1,1]], K=[[1,0],[0.8,0.6],[0,1]], V=[[1,0],[0,1],[1,1]];
+const ids=['row','qx','qy','tau','causal']; const els=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+const dot=(a,b)=>a[0]*b[0]+a[1]*b[1];
+function rowWeights(q,i,tau,causal) {
+  const scores=K.map((k,j)=>causal&&j>i?null:dot(q,k)/Math.sqrt(2)/tau);
+  const max=Math.max(...scores.filter(x=>x!==null));
+  const e=scores.map(x=>x===null?0:Math.exp(x-max)); const sum=e.reduce((a,b)=>a+b,0);
+  return {scores,weights:e.map(x=>x/sum)};
+}
+function render(){
+  const row=Number(els.row.value), qx=Number(els.qx.value), qy=Number(els.qy.value), tau=Number(els.tau.value), causal=els.causal.checked;
+  const Q=baseQ.map(q=>q.slice());Q[row]=[qx,qy];
+  for(const id of ['qx','qy','tau']) document.getElementById(id+'-out').textContent=Number(els[id].value).toFixed(1);
+  document.getElementById('inputs').textContent='keys: [1,0], [0.8,0.6], [0,1]  |  values: [1,0], [0,1], [1,1]';
+  const body=document.getElementById('matrix');body.replaceChildren();let selected;
+  Q.forEach((q,i)=>{
+    const result=rowWeights(q,i,tau,causal);if(i===row)selected=result;
+    const tr=document.createElement('tr');if(i===row)tr.className='selected';
+    const th=document.createElement('th');th.textContent='token '+i;tr.append(th);
+    result.weights.forEach((w,j)=>{
+      const td=document.createElement('td');td.textContent=result.scores[j]===null?'masked':w.toFixed(3);
+      td.style.backgroundColor=result.scores[j]===null?'#eff2f6':'rgba(8,127,140,'+(0.1+0.58*w)+')';
+      tr.append(td);
+    });body.append(tr);
+  });
+  const out=[0,1].map(d=>selected.weights.reduce((sum,w,j)=>sum+w*V[j][d],0));
+  const scoreText=selected.scores.map(x=>x===null?'masked':x.toFixed(2)).join(', ');
+  document.getElementById('readout').textContent='selected scores: ['+scoreText+']  →  weighted value output: ['+out.map(x=>x.toFixed(3)).join(', ')+']';
+}
+ids.forEach(id=>els[id].addEventListener('input',render));render();
+</script></body></html>

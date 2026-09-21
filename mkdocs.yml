@@ -1,0 +1,56 @@
+site_name: LLM Foundations from Scratch
+site_description: Visual, math-first notes on building a Transformer language model from text to generation.
+site_url: https://dpaul0501.github.io/llm-agent-reads/
+repo_url: https://github.com/dpaul0501/llm-agent-reads
+docs_dir: docs
+nav:
+  - Home: index.md
+  - "Foundation 0: Architecture, Math, and ML": module_01_foundations.md
+  - "Part 1: Tokenization and Embeddings": part_01_embeddings.md
+  - "Part 2: Positional Encoding": part_02_position_encoding.md
+  - "Part 3: Attention": part_03_attention.md
+  - "Part 4: Transformer Block": part_04_transformer_block.md
+  - "Part 5: Training and Optimization": part_05_training_and_optimization.md
+  - "Part 6: Inference and Serving": part_06_inference_and_tricks.md
+  - "Appendix: LSTM from Scratch": appendix_lstm.md
+  - Resources: course_resources.md
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: deep purple
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.arithmatex:
+      generic: true
+  - tables
+  - toc:
+      permalink: true
+
+extra_javascript:
+  - https://polyfill.io/v1/polyfill.min.js?features=es6
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+  - javascripts/presentation.js
+
+extra_css:
+  - stylesheets/presentation.css
+
+plugins:
+  - search

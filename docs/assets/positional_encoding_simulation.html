@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Positional Encoding Simulation</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --panel: #ffffff;
+        --ink: #1f2937;
+        --muted: #64748b;
+        --blue: #4ea8de;
+        --green: #46b483;
+        --orange: #f2a65a;
+        --purple: #8f6ad7;
+        --line: #dfe7f3;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 18px 16px 24px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 5px 24px rgba(15, 23, 42, 0.06);
+        padding: 18px;
+      }
+      .title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        margin: 0 0 18px;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 1.4fr 0.8fr;
+        gap: 20px;
+      }
+      canvas {
+        width: 100%;
+        background: linear-gradient(180deg, #f8fbff, #ffffff);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        display: block;
+      }
+      .controls {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+      }
+      .slider-wrap {
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px 14px;
+      }
+      label {
+        display: flex;
+        justify-content: space-between;
+        color: var(--muted);
+        font-size: 14px;
+        margin-bottom: 8px;
+      }
+      input[type="range"] {
+        width: 100%;
+      }
+      .stat {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--ink);
+      }
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .dot {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      @media (max-width: 820px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="title">Positional encoding as a phase signal</div>
+        <p class="subtitle">The model injects order by rotating feature pairs using a position-dependent angle.</p>
+
+        <div class="grid">
+          <canvas id="plotCanvas" width="760" height="420"></canvas>
+
+          <div class="controls">
+            <div class="slider-wrap">
+              <label><span>token position</span> <span id="posLabel">0</span></label>
+              <input id="posSlider" type="range" min="0" max="20" value="0" />
+            </div>
+
+            <div class="slider-wrap">
+              <div class="stat">Current positional vector</div>
+              <div id="vectorBox" style="margin-top:8px; font-size: 14px; line-height: 1.6; color: var(--ink);"></div>
+            </div>
+
+            <div class="slider-wrap">
+              <div class="stat">Interpretation</div>
+              <div id="interpretation" style="margin-top:8px; font-size: 14px; line-height:1.6; color: var(--ink);"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="legend">
+          <div><span class="dot" style="background:#4ea8de"></span> sin(ωp)</div>
+          <div><span class="dot" style="background:#46b483"></span> cos(ωp)</div>
+          <div><span class="dot" style="background:#f2a65a"></span> phase point</div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const canvas = document.getElementById('plotCanvas');
+      const ctx = canvas.getContext('2d');
+      const posSlider = document.getElementById('posSlider');
+      const posLabel = document.getElementById('posLabel');
+      const vectorBox = document.getElementById('vectorBox');
+      const interpretation = document.getElementById('interpretation');
+
+      function waveformValue(pos, k, d) {
+        const omega = 1 / (10000 ** (2 * k / d));
+        return Math.sin(pos * omega);
+      }
+
+      function draw() {
+        const pos = Number(posSlider.value);
+        posLabel.textContent = String(pos);
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const pad = 30;
+        const plotW = width - 2 * pad;
+        const plotH = height - 2 * pad;
+
+        ctx.clearRect(0, 0, width, height);
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.strokeStyle = '#dfe7f3';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(pad, pad);
+        ctx.lineTo(pad, height - pad);
+        ctx.lineTo(width - pad, height - pad);
+        ctx.stroke();
+
+        const dims = [0, 2, 4, 6];
+        dims.forEach((k, index) => {
+          ctx.beginPath();
+          ctx.strokeStyle = ['#4ea8de', '#46b483', '#f2a65a', '#8f6ad7'][index % 4];
+          ctx.lineWidth = 2.25;
+
+          for (let p = 0; p <= 20; p++) {
+            const x = pad + (p / 20) * plotW;
+            const yBase = height - pad;
+            const phase = p * (1 / (10000 ** (2 * k / 8)));
+            const y = yBase - ((Math.sin(phase) + 1) / 2) * (plotH);
+            if (p === 0) ctx.moveTo(x, y);
+            else ctx.lineTo(x, y);
+          }
+          ctx.stroke();
+        });
+
+        const currentX = pad + (pos / 20) * plotW;
+        const currentY = height - pad - ((Math.sin(pos * (1 / (10000 ** (0 / 8)))) + 1) / 2) * plotH;
+
+        ctx.fillStyle = '#f2a65a';
+        ctx.beginPath();
+        ctx.arc(currentX, currentY, 6, 0, Math.PI * 2);
+        ctx.fill();
+
+        const vals = [];
+        for (let i = 0; i < 8; i += 1) {
+          const omega = 1 / (10000 ** (2 * i / 8));
+          const value = i % 2 === 0 ? Math.sin(pos * omega) : Math.cos(pos * omega);
+          vals.push(value.toFixed(2));
+        }
+
+        vectorBox.innerHTML = '[ ' + vals.join(', ') + ' ]';
+
+        const phase = Math.atan2(Math.cos(pos * (1 / (10000 ** (0 / 8)))), Math.sin(pos * (1 / (10000 ** (0 / 8)))));
+        interpretation.innerHTML = `At position ${pos}, each dimension rotates with a different frequency. The signal is smooth, repeating, and distinct for nearby positions. The model sees this as a structured geometric code, not just a label.`;
+      }
+
+      posSlider.addEventListener('input', draw);
+      draw();
+    </script>
+  </body>
+</html>

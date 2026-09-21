@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transformer animation</title>
+    <style>
+      :root {
+        --bg: #f8fafc;
+        --panel: #ffffff;
+        --ink: #1f2937;
+        --muted: #64748b;
+        --blue: #4ea8de;
+        --green: #46b483;
+        --orange: #f2a65a;
+        --purple: #8f6ad7;
+        --red: #e76f51;
+        --line: #dfe7f3;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+      }
+      .wrap {
+        width: 100%;
+        max-width: 1140px;
+        margin: 0 auto;
+        padding: 20px 16px 30px;
+      }
+      .title {
+        text-align: center;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .subtitle {
+        text-align: center;
+        color: var(--muted);
+        margin-bottom: 18px;
+        font-size: 15px;
+      }
+      .card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+        padding: 18px;
+      }
+      .stage {
+        position: relative;
+        height: 520px;
+        overflow: hidden;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 110px 1fr 140px;
+        gap: 14px;
+        align-items: center;
+        margin: 14px 0;
+      }
+      .token-box {
+        height: 54px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        border: 2px solid var(--blue);
+        background: #edf7ff;
+        color: var(--ink);
+        transition: all 0.3s ease;
+      }
+      .token-box.active {
+        background: #d9f7ff;
+        border-color: var(--red);
+        box-shadow: 0 0 0 4px rgba(231, 111, 81, 0.15);
+      }
+      .bar-wrap {
+        height: 28px;
+        border-radius: 999px;
+        background: #eef2f7;
+        border: 1px solid var(--line);
+        overflow: hidden;
+        position: relative;
+      }
+      .bar {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        border-radius: 999px;
+        background: linear-gradient(90deg, #9bd3f5, #4ea8de);
+        width: 0%;
+        transition: width 0.5s ease;
+      }
+      .score {
+        font-weight: 700;
+        font-size: 16px;
+        color: var(--muted);
+        text-align: right;
+      }
+      .query-label {
+        margin-top: 12px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .formula {
+        margin-top: 18px;
+        padding: 14px 16px;
+        background: #f8fafc;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        font-size: 18px;
+        line-height: 1.5;
+        color: var(--ink);
+      }
+      .step-controls {
+        display: flex;
+        justify-content: center;
+        margin-top: 18px;
+      }
+      button {
+        border: 0;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--blue), var(--purple));
+        color: white;
+        padding: 10px 18px;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .legend {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 10px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      @media (max-width: 760px) {
+        .row {
+          grid-template-columns: 86px 1fr 90px;
+        }
+        .token-box { font-size: 15px; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="title">Transformer attention in motion</div>
+      <div class="subtitle">The query for “sat” weighs every other token in the sequence.</div>
+
+      <div class="card">
+        <div class="stage" id="stage"></div>
+        <div class="step-controls">
+          <button id="toggleBtn">Play attention</button>
+        </div>
+        <div class="legend">
+          <div><span class="dot" style="background:#4ea8de"></span> attention weight</div>
+          <div><span class="dot" style="background:#e76f51"></span> current query token</div>
+        </div>
+        <div class="formula">
+          <strong>Attention:</strong> &nbsp; $\alpha_{ij} = \mathrm{softmax}\left(\frac{q_i \cdot k_j}{\sqrt{d_k}}\right)$ 
+          &nbsp; and &nbsp; $z_i = \sum_j \alpha_{ij} v_j$
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const tokens = ["the", "cat", "sat", "on", "the", "mat"];
+      const qIndexSequence = [0, 1, 2, 3, 4, 5, 2];
+      let idx = 0;
+      let isPlaying = false;
+      let intervalId = null;
+
+      const stage = document.getElementById('stage');
+      const toggleBtn = document.getElementById('toggleBtn');
+
+      function softmax(values) {
+        const max = Math.max(...values);
+        const exps = values.map(v => Math.exp(v - max));
+        const sum = exps.reduce((a, b) => a + b, 0);
+        return exps.map(v => v / sum);
+      }
+
+      function buildRows() {
+        stage.innerHTML = '';
+        tokens.forEach((token, i) => {
+          const row = document.createElement('div');
+          row.className = 'row';
+
+          const box = document.createElement('div');
+          box.className = 'token-box';
+          box.textContent = token;
+          box.id = `token-${i}`;
+
+          const barWrap = document.createElement('div');
+          barWrap.className = 'bar-wrap';
+          const bar = document.createElement('div');
+          bar.className = 'bar';
+          bar.id = `bar-${i}`;
+          barWrap.appendChild(bar);
+
+          const score = document.createElement('div');
+          score.className = 'score';
+          score.id = `score-${i}`;
+          score.textContent = '0.00';
+
+          row.appendChild(box);
+          row.appendChild(barWrap);
+          row.appendChild(score);
+          stage.appendChild(row);
+        });
+      }
+
+      function updateAttention() {
+        const queryIndex = qIndexSequence[idx % qIndexSequence.length];
+
+        const q = [0.9, 1.1, 0.4, 0.8, 0.6, 0.5];
+        const keyMatrix = [
+          [0.8, 0.9, 0.3, 0.5, 0.2, 0.4],
+          [0.9, 1.0, 0.5, 0.7, 0.3, 0.4],
+          [1.2, 1.4, 0.9, 0.7, 0.5, 0.6],
+          [0.2, 0.3, 0.1, 0.9, 0.4, 0.2],
+          [0.7, 0.9, 0.2, 0.5, 0.8, 0.5],
+          [0.5, 0.6, 0.2, 0.9, 0.3, 0.9],
+        ];
+
+        const scores = tokens.map((_, j) => {
+          const dot = keyMatrix[j].reduce((sum, value, k) => sum + value * q[k], 0);
+          return dot / 3.0;
+        });
+
+        const weights = softmax(scores);
+
+        tokens.forEach((token, j) => {
+          const box = document.getElementById(`token-${j}`);
+          const bar = document.getElementById(`bar-${j}`);
+          const scoreNode = document.getElementById(`score-${j}`);
+
+          box.classList.toggle('active', j === queryIndex);
+          bar.style.width = `${weights[j] * 100}%`;
+          scoreNode.textContent = weights[j].toFixed(2);
+          bar.style.background = j === queryIndex
+            ? 'linear-gradient(90deg, #f3a683, #e76f51)'
+            : 'linear-gradient(90deg, #9bd3f5, #4ea8de)';
+        });
+
+        const label = document.createElement('div');
+        label.className = 'query-label';
+        label.textContent = `Current query token: "${tokens[queryIndex]}"  ->  attention weights across the sequence`;
+
+        const prevLabel = document.querySelector('.query-label');
+        if (prevLabel) prevLabel.remove();
+        stage.appendChild(label);
+      }
+
+      function tick() {
+        updateAttention();
+        idx += 1;
+      }
+
+      function startLoop() {
+        if (!isPlaying) {
+          isPlaying = true;
+          toggleBtn.textContent = 'Pause attention';
+          intervalId = setInterval(tick, 1200);
+          tick();
+        }
+      }
+
+      function stopLoop() {
+        isPlaying = false;
+        toggleBtn.textContent = 'Play attention';
+        clearInterval(intervalId);
+      }
+
+      toggleBtn.addEventListener('click', () => {
+        if (isPlaying) stopLoop();
+        else startLoop();
+      });
+
+      buildRows();
+      updateAttention();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,62 @@
+body.presentation-mode .md-header,
+body.presentation-mode .md-tabs,
+body.presentation-mode .md-sidebar,
+body.presentation-mode .md-footer {
+  display: none;
+}
+
+body.presentation-mode .md-main__inner {
+  margin: 0 auto;
+  max-width: 1500px;
+}
+
+body.presentation-mode .md-content {
+  margin: 0;
+}
+
+body.presentation-mode .md-content__inner {
+  font-size: 1.22rem;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 2rem 3rem 5rem;
+}
+
+body.presentation-mode .md-content__inner > h1 {
+  font-size: 2.5rem;
+}
+
+body.presentation-mode figure,
+body.presentation-mode .mermaid,
+body.presentation-mode iframe {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1100px;
+}
+
+.presentation-hint {
+  background: var(--md-primary-fg-color);
+  border-radius: 0.35rem;
+  bottom: 1rem;
+  box-shadow: var(--md-shadow-z2);
+  color: var(--md-primary-bg-color);
+  font-size: 0.75rem;
+  opacity: 0;
+  padding: 0.45rem 0.7rem;
+  pointer-events: none;
+  position: fixed;
+  right: 1rem;
+  transition: opacity 160ms ease;
+  z-index: 20;
+}
+
+.presentation-hint.visible {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  body.presentation-mode .md-content__inner {
+    font-size: 1.05rem;
+    padding: 1rem 1.2rem 3rem;
+  }
+}

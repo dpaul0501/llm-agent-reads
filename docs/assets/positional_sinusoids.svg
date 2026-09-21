@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="420" viewBox="0 0 800 420">
+  <rect width="100%" height="100%" fill="#f7f9fc"/>
+  <g stroke="#dfe7f3" stroke-width="1">
+    <line x1="70" y1="330" x2="730" y2="330"/>
+    <line x1="70" y1="70" x2="70" y2="330"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-size="18">
+    <text x="320" y="380">position</text>
+    <text x="20" y="200" transform="rotate(-90 20 200)">value</text>
+  </g>
+
+  <g fill="none" stroke-width="3">
+    <path d="M70 250 C 120 200, 150 150, 200 220 S 280 290, 330 180 S 400 120, 450 200 S 520 290, 570 170 S 640 110, 730 210" stroke="#4ea8de"/>
+    <path d="M70 220 C 120 250, 150 80, 200 140 S 280 250, 330 120 S 400 200, 450 130 S 520 260, 570 120 S 640 200, 730 170" stroke="#f2a65a"/>
+    <path d="M70 190 C 120 180, 150 220, 200 170 S 280 120, 330 210 S 400 260, 450 160 S 520 90, 570 240 S 640 300, 730 195" stroke="#8f6ad7"/>
+    <path d="M70 260 C 120 120, 150 280, 200 200 S 280 80, 330 240 S 400 150, 450 250 S 520 130, 570 210 S 640 120, 730 230" stroke="#64c58d"/>
+  </g>
+
+  <g font-family="Arial, sans-serif" font-size="16" fill="#2a2f36">
+    <text x="530" y="110">freq 1</text>
+    <text x="530" y="130">freq 2</text>
+    <text x="530" y="150">freq 4</text>
+    <text x="530" y="170">freq 8</text>
+  </g>
+  <g fill="#4ea8de"><rect x="500" y="95" width="16" height="10"/></g>
+  <g fill="#f2a65a"><rect x="500" y="115" width="16" height="10"/></g>
+  <g fill="#8f6ad7"><rect x="500" y="135" width="16" height="10"/></g>
+  <g fill="#64c58d"><rect x="500" y="155" width="16" height="10"/></g>
+
+  <text x="195" y="55" font-family="Arial, sans-serif" font-size="26" font-weight="600">Sinusoidal positional signals at different frequencies</text>
+</svg>

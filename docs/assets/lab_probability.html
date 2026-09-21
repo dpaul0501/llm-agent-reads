@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Softmax and loss lab</title><link rel="stylesheet" href="lab.css"></head>
+<body><main class="lab"><h1>Softmax and loss lab</h1><p class="muted">Change logits and temperature. The target changes the loss, not the predicted probabilities.</p>
+<div class="grid"><section class="panel"><h2>Inputs</h2>
+<label class="control">Token A logit <span id="a-out"></span><input id="a" type="range" min="-3" max="3" step="0.1" value="2"></label>
+<label class="control">Token B logit <span id="b-out"></span><input id="b" type="range" min="-3" max="3" step="0.1" value="1"></label>
+<label class="control">Token C logit <span id="c-out"></span><input id="c" type="range" min="-3" max="3" step="0.1" value="0"></label>
+<label class="control">Temperature <span id="tau-out"></span><input id="tau" type="range" min="0.3" max="3" step="0.1" value="1"></label>
+<label for="target"><strong>Correct next token</strong></label><select id="target"><option value="0">A</option><option value="1">B</option><option value="2">C</option></select>
+<p class="muted">Try making the correct token's logit low. Watch its negative log-likelihood rise.</p></section>
+<section class="panel"><h2>Predicted distribution</h2><div class="bars" id="bars"></div><div class="readout formula" id="readout" aria-live="polite"></div><p class="muted">Entropy measures uncertainty in the model's distribution. Cross-entropy for a one-hot target is −ln(probability of the correct token).</p></section></div></main>
+<script>
+const ids = ['a','b','c','tau','target'];
+const els = Object.fromEntries(ids.map(id => [id, document.getElementById(id)]));
+function render() {
+  const logits = ['a','b','c'].map(id => Number(els[id].value));
+  const tau = Number(els.tau.value), target = Number(els.target.value);
+  for (const id of ['a','b','c']) document.getElementById(id+'-out').textContent = Number(els[id].value).toFixed(1);
+  document.getElementById('tau-out').textContent = tau.toFixed(1);
+  const scaled = logits.map(x => x/tau), shift = Math.max(...scaled);
+  const exp = scaled.map(x => Math.exp(x-shift)), total = exp.reduce((a,b) => a+b, 0);
+  const p = exp.map(x => x/total), loss = -Math.log(p[target]);
+  const entropy = -p.reduce((s,x) => s+x*Math.log(x), 0);
+  const bars = document.getElementById('bars'); bars.replaceChildren();
+  p.forEach((value,i) => {
+    const row = document.createElement('div'); row.className='bar-row';
+    const label=document.createElement('strong'); label.textContent='Token '+String.fromCharCode(65+i);
+    const track=document.createElement('div'); track.className='track';
+    const fill=document.createElement('div'); fill.className='fill '+(i===target?'teal':''); fill.style.width=(100*value)+'%'; track.append(fill);
+    const number=document.createElement('span'); number.textContent=value.toFixed(3);
+    row.append(label,track,number); bars.append(row);
+  });
+  document.getElementById('readout').textContent = 'target probability = '+p[target].toFixed(3)+'  |  loss = '+loss.toFixed(3)+' nats  |  entropy = '+entropy.toFixed(3)+' nats';
+}
+ids.forEach(id => els[id].addEventListener('input', render)); render();
+</script></body></html>

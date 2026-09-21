@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700">
+  <defs>
+    <style>
+      .title { font: 700 30px Arial, sans-serif; fill: #1f2937; }
+      .subtitle { font: 600 20px Arial, sans-serif; fill: #1f2937; }
+      .small { font: 500 16px Arial, sans-serif; fill: #475569; }
+      .panel1 { fill: #f8fbff; stroke: #4ea8de; stroke-width: 2; }
+      .panel2 { fill: #f8fff8; stroke: #46b483; stroke-width: 2; }
+      .panel3 { fill: #fff9f0; stroke: #f2a65a; stroke-width: 2; }
+      .arrow { stroke: #475569; stroke-width: 2.6; fill: none; marker-end: url(#arrowhead); }
+      .line { stroke: #3b82f6; stroke-width: 3; fill: none; }
+      .line2 { stroke: #46b483; stroke-width: 3; fill: none; }
+      .line3 { stroke: #f2a65a; stroke-width: 3; fill: none; }
+    </style>
+    <marker id="arrowhead" markerWidth="12" markerHeight="10" refX="10" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#475569"/>
+    </marker>
+  </defs>
+
+  <text x="600" y="52" text-anchor="middle" class="title">Position encoding methods</text>
+
+  <rect x="60" y="120" width="320" height="500" rx="18" class="panel1"/>
+  <text x="220" y="170" text-anchor="middle" class="subtitle">1. Linear / index label</text>
+  <text x="220" y="210" text-anchor="middle" class="small">p_i = c · i</text>
+  <path d="M95 470 Q 220 260 345 470" class="line"/>
+  <text x="220" y="515" text-anchor="middle" class="small">Different positions remain ordered,</text>
+  <text x="220" y="540" text-anchor="middle" class="small">but the signal is not periodic</text>
+  <text x="220" y="570" text-anchor="middle" class="small">and it does not reflect local phase structure.</text>
+
+  <path d="M380 360 H 430" class="arrow"/>
+
+  <rect x="430" y="120" width="320" height="500" rx="18" class="panel2"/>
+  <text x="590" y="170" text-anchor="middle" class="subtitle">2. Sinusoidal encoding</text>
+  <text x="590" y="210" text-anchor="middle" class="small">p_i = [sin(ωi), cos(ωi), sin(2ωi), ...]</text>
+  <path d="M470 455 C 530 350, 570 260, 620 220 S 700 210, 715 260 S 700 390, 590 465" class="line2"/>
+  <text x="590" y="515" text-anchor="middle" class="small">Smooth, periodic, multi-frequency</text>
+  <text x="590" y="540" text-anchor="middle" class="small">good local continuity and global distinction</text>
+
+  <path d="M750 360 H 800" class="arrow"/>
+
+  <rect x="800" y="120" width="320" height="500" rx="18" class="panel3"/>
+  <text x="960" y="170" text-anchor="middle" class="subtitle">3. RoPE</text>
+  <text x="960" y="210" text-anchor="middle" class="small">rotate pairs by angle θ = pos · ω_k</text>
+  <path d="M845 420 L 950 290 L 1075 420" class="line3"/>
+  <path d="M845 420 L 950 510 L 1075 420" class="line3"/>
+  <circle cx="950" cy="400" r="12" fill="#f2a65a"/>
+  <text x="960" y="515" text-anchor="middle" class="small">Relative offsets become angle differences</text>
+  <text x="960" y="540" text-anchor="middle" class="small">this matches attention geometry well</text>
+</svg>

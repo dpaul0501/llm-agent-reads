@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>LSTM memory lab</title><link rel="stylesheet" href="lab.css"></head>
+<body><main class="lab"><h1>LSTM memory lab</h1><p class="muted">This shows one scalar feature of the cell. The sliders are gate outputs; a trained LSTM computes them from input and previous hidden state.</p>
+<div class="grid"><section class="panel"><h2>Choose one step</h2>
+<label class="control">Previous cell c<sub>t−1</sub> <span id="prev-out"></span><input id="prev" type="range" min="-1" max="1" step="0.05" value="0.5"></label>
+<label class="control">Forget gate f <span id="forget-out"></span><input id="forget" type="range" min="0" max="1" step="0.05" value="0.8"></label>
+<label class="control">Input gate i <span id="input-out"></span><input id="input" type="range" min="0" max="1" step="0.05" value="0.6"></label>
+<label class="control">Candidate content c̃ <span id="candidate-out"></span><input id="candidate" type="range" min="-1" max="1" step="0.05" value="0.5"></label>
+<label class="control">Output gate o <span id="output-out"></span><input id="output" type="range" min="0" max="1" step="0.05" value="0.5"></label></section>
+<section class="panel"><h2>Memory update</h2><div class="bars" id="bars"></div><div class="readout formula" id="readout" aria-live="polite"></div>
+<p class="muted">Set f=1 and i=0 to carry the old cell unchanged. Set o=0 to hide the cell from the exposed hidden state without erasing it.</p></section></div></main>
+<script>
+const ids=['prev','forget','input','candidate','output'];const els=Object.fromEntries(ids.map(id=>[id,document.getElementById(id)]));
+function render(){
+  const [prev,f,i,g,o]=ids.map(id=>Number(els[id].value));
+  ids.forEach(id=>document.getElementById(id+'-out').textContent=Number(els[id].value).toFixed(2));
+  const retained=f*prev,written=i*g,cell=retained+written,hidden=o*Math.tanh(cell);
+  const bars=document.getElementById('bars');bars.replaceChildren();
+  for(const [label,value,color] of [['retained',retained,''],['written',written,'orange'],['new cell',cell,'teal'],['hidden',hidden,'']]){
+    const row=document.createElement('div');row.className='bar-row';
+    const name=document.createElement('strong');name.textContent=label;
+    const track=document.createElement('div');track.className='track';
+    const fill=document.createElement('div');fill.className='fill '+color;fill.style.width=(Math.min(100,Math.abs(value)*100))+'%';track.append(fill);
+    const number=document.createElement('span');number.textContent=value.toFixed(2);
+    row.append(name,track,number);bars.append(row);
+  }
+  document.getElementById('readout').textContent='c = f×previous + i×candidate = '+retained.toFixed(3)+' + '+written.toFixed(3)+' = '+cell.toFixed(3)+'  |  h = o×tanh(c) = '+hidden.toFixed(3);
+}
+ids.forEach(id=>els[id].addEventListener('input',render));render();
+</script></body></html>

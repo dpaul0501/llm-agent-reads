@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   version="1.1"
+   width="524px"
+   height="341px"
+   viewBox="-0.5 -0.5 524 341"
+   content="&lt;mxfile host=&quot;app.diagrams.net&quot; modified=&quot;2020-09-23T10:41:26.009Z&quot; agent=&quot;5.0 (X11)&quot; version=&quot;13.7.4&quot; etag=&quot;-OSUj8NCAjhU1uJXwxOG&quot; type=&quot;device&quot;&gt;&lt;diagram id=&quot;1-sUDnFmsqqI_lfT3Egb&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;"
+   id="svg232">
+  <metadata
+     id="metadata236">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/by/4.0/" />
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/by/4.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Notice" />
+        <cc:requires
+           rdf:resource="http://creativecommons.org/ns#Attribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs2">
+  </defs>
+  <g
+     id="g222">
+    <rect
+       x="75"
+       y="40"
+       width="380"
+       height="240"
+       rx="36"
+       ry="36"
+       fill="#4ec2a7"
+       stroke="none"
+       pointer-events="all"
+       id="rect4" />
+    <circle
+       cx="235"
+       cy="120"
+       fill="#e5ff5b"
+       stroke="none"
+       pointer-events="all"
+       id="ellipse6"
+       r="15" />
+    <g
+       transform="translate(-0.95650543,3.1257362)"
+       id="g12">
+      <switch
+         id="switch10">
+        <text
+           x="235"
+           y="124"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text8"
+           style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan1073" /></text>
+      </switch>
+    </g>
+    <path
+       d="m 35,315 q 0,-25 30,-25"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path14" />
+    <path
+       d="m 114.83,160 q 0,0 0,-68.71"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path16" />
+    <path
+       d="m 119.33,96.93 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path18" />
+    <path
+       d="m 90,290 q 25,0 25,-30"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path20" />
+    <path
+       d="m 145,290 q 20,0 20,-30"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path22" />
+    <path
+       d="m 215,290 q 20,0 20,-30"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path24" />
+    <path
+       d="m 245,290 q 20,0 20,-30"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path26" />
+    <path
+       d="m 65,290 q -5,0 180,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path28" />
+    <rect
+       x="100"
+       y="160"
+       width="30"
+       height="30"
+       rx="4.5"
+       ry="4.5"
+       fill="#ff9955"
+       stroke="none"
+       pointer-events="all"
+       id="rect30" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g36">
+      <switch
+         id="switch34">
+      
+        <text
+           x="115"
+           y="179"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text32">σ</text>
+      </switch>
+    </g>
+    <rect
+       x="150"
+       y="160"
+       width="30"
+       height="30"
+       rx="4.5"
+       ry="4.5"
+       fill="#ff9955"
+       stroke="none"
+       pointer-events="all"
+       id="rect38" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g44">
+      <switch
+         id="switch42">
+ 
+        <text
+           x="165"
+           y="179"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text40">σ</text>
+      </switch>
+    </g>
+    <path
+       d="m 115,260 q 0,-15 2.5,-15 2.5,0 2.5,-5 0,-5 -2.55,-5 -2.55,0 -2.58,-38.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path46" />
+    <path
+       d="m 119.37,202.35 -4.51,-9 -4.49,9.01"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path48" />
+    <rect
+       x="200"
+       y="160"
+       width="70"
+       height="30"
+       rx="4.5"
+       ry="4.5"
+       fill="#ff9955"
+       stroke="none"
+       pointer-events="all"
+       id="rect50" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g56">
+      <switch
+         id="switch54">
+       
+        <text
+           x="235"
+           y="179"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text52">tanh</text>
+      </switch>
+    </g>
+    <path
+       d="m 265,260 q 0,-20 18.29,-20"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path58" />
+    <path
+       d="m 277.65,244.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path60" />
+    <path
+       d="m 90,240 q 25,0 25,-43.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path62" />
+    <path
+       d="m 119.5,202.35 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path64" />
+    <path
+       d="m 165,260 q 0,-15 2.5,-15 2.5,0 2.5,-5 0,-5 -2.55,-5 -2.55,0 -2.58,-38.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path66" />
+    <path
+       d="m 169.37,202.35 -4.51,-9 -4.49,9.01"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path68" />
+    <path
+       d="m 140,240 q 25,0 25,-43.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path70" />
+    <path
+       d="m 169.5,202.35 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path72" />
+    <path
+       d="m 235,260 q 0,-15 2.5,-15 2.5,0 2.5,-5 0,-5 -2.55,-5 -2.55,0 -2.58,-38.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path74" />
+    <path
+       d="m 239.37,202.35 -4.51,-9 -4.49,9.01"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path76" />
+    <path
+       d="m 210,240 q 25,0 25,-43.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path78" />
+    <path
+       d="m 239.5,202.35 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path80" />
+    <circle
+       cx="115"
+       cy="70"
+       fill="#e5ff5b"
+       stroke="none"
+       pointer-events="all"
+       id="ellipse82"
+       r="15" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g88">
+      <switch
+         id="switch86">
+       
+        <text
+           x="115"
+           y="74"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text84" />
+      </switch>
+    </g>
+    <path
+       d="m 60,70 q 0,0 33.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path90" />
+    <path
+       d="m 87.65,74.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path92" />
+    <path
+       d="M 164.83,160.42 Q 164.8,120 213.29,120"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path94" />
+    <path
+       d="m 207.65,124.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path96" />
+    <circle
+       cx="235"
+       cy="70"
+       fill="#e5ff5b"
+       stroke="none"
+       pointer-events="all"
+       id="ellipse98"
+       r="15" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g104">
+      <switch
+         id="switch102">
+ 
+        <text
+           x="235"
+           y="74"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           font-weight="bold"
+           id="text100">+</text>
+      </switch>
+    </g>
+    <path
+       d="m 130,70 q 0,0 83.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path106" />
+    <path
+       d="m 207.65,74.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path108" />
+    <rect
+       x="330"
+       y="160"
+       width="70"
+       height="30"
+       rx="4.5"
+       ry="4.5"
+       fill="#ff9955"
+       stroke="none"
+       pointer-events="all"
+       id="rect110" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g116">
+      <switch
+         id="switch114">
+  
+        <text
+           x="365"
+           y="179"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text112">tanh</text>
+      </switch>
+    </g>
+    <circle
+       cx="365"
+       cy="240"
+       fill="#e5ff5b"
+       stroke="none"
+       pointer-events="all"
+       id="ellipse118"
+       r="15" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g124" />
+    <path
+       d="m 340,70 q 25,0 25,83.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path126" />
+    <path
+       d="m 360.5,147.65 4.5,9 4.5,-9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path128" />
+    <path
+       d="m 250,70 q 0,0 223.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path130" />
+    <path
+       d="m 467.65,74.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path132" />
+    <path
+       d="m 235,105 q 0,-10 0,-13.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path134" />
+    <path
+       d="m 239.5,97.35 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path136" />
+    <path
+       d="m 234.93,160 q -0.03,-10 0.03,-18.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path138" />
+    <path
+       d="m 239.42,147.38 -4.44,-9.03 -4.56,8.97"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path140" />
+    <path
+       d="m 365,190 q 0,5 0,28.29"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path142" />
+    <path
+       d="m 360.5,212.65 4.5,9 4.5,-9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path144" />
+    <path
+       d="m 380,240 q 50,0 93.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path146" />
+    <path
+       d="m 467.65,244.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path148" />
+    <path
+       d="m 390,240 q 30,0 30,-30"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path150" />
+    <path
+       d="m 420.14,90 q -0.04,-15 2.46,-15 2.5,0 2.5,-5 0,-5 -2.55,-5 Q 420,65 420,26.71"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path152" />
+    <path
+       d="m 424.5,32.35 -4.5,-9 -4.5,9"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path154" />
+    <path
+       d="m 420,215 q 0,-50 0,-125"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path156" />
+    <rect
+       x="5"
+       y="320"
+       width="60"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect158" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g164">
+      <switch
+         id="switch162">
+     
+        <text
+           x="35"
+           y="334"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text160">x<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1065">t</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="0"
+       y="230"
+       width="80"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect166" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g172">
+      <switch
+         id="switch170">
+      
+        <text
+           x="40"
+           y="244"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text168">h<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1063">t-1</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="5"
+       y="60"
+       width="80"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect174" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g180">
+      <switch
+         id="switch178">
+     
+        <text
+           x="45"
+           y="74"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text176">c<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1061">t-1</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="460"
+       y="60"
+       width="60"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect182" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g188">
+      <switch
+         id="switch186">
+    
+        <text
+           x="490"
+           y="74"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text184">c<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1069">t</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="457.5"
+       y="230"
+       width="65"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect190" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g196">
+      <switch
+         id="switch194">
+    
+        <text
+           x="490"
+           y="244"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text192">h<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1067">t</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="390"
+       y="0"
+       width="65"
+       height="20"
+       fill="none"
+       stroke="none"
+       pointer-events="all"
+       id="rect198" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g204">
+      <switch
+         id="switch202">
+      
+        <text
+           x="423"
+           y="14"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text200">h<tspan
+   style="font-size:65%;baseline-shift:sub"
+   id="tspan1071">t</tspan></text>
+      </switch>
+    </g>
+    <rect
+       x="290"
+       y="225"
+       width="30"
+       height="30"
+       rx="4.5"
+       ry="4.5"
+       fill="#ff9955"
+       stroke="none"
+       pointer-events="all"
+       id="rect206" />
+    <g
+       transform="translate(-0.5,-0.5)"
+       id="g212">
+      <switch
+         id="switch210">
+       
+        <text
+           x="305"
+           y="244"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text208">σ</text>
+      </switch>
+    </g>
+    <path
+       d="m 60,240 q 0,0 223.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path214" />
+    <path
+       d="m 277.65,244.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path216" />
+    <path
+       d="m 320,240 q 0,0 23.29,0"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="stroke"
+       id="path218" />
+    <path
+       d="m 337.65,244.5 9,-4.5 -9,-4.5"
+       fill="none"
+       stroke="#4d4d4d"
+       stroke-width="3"
+       stroke-miterlimit="10"
+       pointer-events="all"
+       id="path220" />
+    <g
+       transform="translate(130.09324,123.64492)"
+       id="g12-6">
+      <switch
+         id="switch10-9">
+      
+        <text
+           x="235"
+           y="124"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text8-3"
+           style="font-size:12px;font-family:Helvetica;text-anchor:middle;fill:#000000"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:32px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan1073-7" /></text>
+      </switch>
+    </g>
+    <g
+       transform="translate(-119.94191,-50.072656)"
+       id="g12-6-4">
+      <switch
+         id="switch10-9-5">
+      
+        <text
+           x="235"
+           y="124"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text8-3-2"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#000000"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan1073-7-5">x</tspan></text>
+      </switch>
+    </g>
+    <g
+       transform="translate(-0.12842471,0.3977778)"
+       id="g12-6-4-4">
+      <switch
+         id="switch10-9-5-7">
+       
+        <text
+           x="235"
+           y="124"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text8-3-2-4"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#000000"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan1073-7-5-4">x</tspan></text>
+      </switch>
+    </g>
+    <g
+       transform="translate(130.42406,119.63753)"
+       id="g12-6-4-3">
+      <switch
+         id="switch10-9-5-0">
+       
+        <text
+           x="235"
+           y="124"
+           fill="#000000"
+           font-family="Helvetica"
+           font-size="12px"
+           text-anchor="middle"
+           id="text8-3-2-7"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle;fill:#000000"><tspan
+             style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Helvetica;-inkscape-font-specification:'Helvetica, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal"
+             id="tspan1073-7-5-8">x</tspan></text>
+      </switch>
+    </g>
+  </g>
+  <switch
+     id="switch230">
+    <g
+       requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"
+       id="g224" />
+    <a
+       transform="translate(0,-5)"
+       xlink:href="https://desk.draw.io/support/solutions/articles/16000042487"
+       target="_blank"
+       id="a228">
+      <text
+         text-anchor="middle"
+         font-size="10px"
+         x="50%"
+         y="100%"
+         id="text226">Viewer does not support full SVG 1.1</text>
+    </a>
+  </switch>
+</svg>

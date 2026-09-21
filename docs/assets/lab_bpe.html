@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>BPE merge lab</title><link rel="stylesheet" href="lab.css"></head>
+<body><main class="lab"><h1>Byte-pair merge lab</h1><p class="muted">This teaching example begins with characters and a word-end marker. Production byte-level BPE starts from bytes and adds pre-tokenization rules.</p>
+<div class="grid"><section class="panel"><h2>Corpus: low low lower</h2><p>Repeated words contribute repeated pair counts. Ties need a defined rule; here we choose (l, o) first.</p>
+<button id="next" type="button">Apply next merge</button><button id="reset" type="button">Reset</button>
+<div class="readout formula" id="step" aria-live="polite"></div></section>
+<section class="panel"><h2>Current pieces</h2><div id="pieces" class="formula"></div><h2 style="margin-top:18px">Adjacent pair counts</h2><div id="counts" class="formula"></div><p class="muted">Merging creates a new vocabulary symbol. It does not create a learned embedding vector; that row is learned later during model training.</p></section></div></main>
+<script>
+const stages=[
+ {name:'Initial character pieces',pieces:[['l','o','w','</w>'],['l','o','w','</w>'],['l','o','w','e','r','</w>']],note:'(l,o): 3; (o,w): 3; (w,</w>): 2; (w,e): 1'},
+ {name:'Merge 1: (l,o) → lo',pieces:[['lo','w','</w>'],['lo','w','</w>'],['lo','w','e','r','</w>']],note:'(lo,w): 3; (w,</w>): 2; (w,e): 1'},
+ {name:'Merge 2: (lo,w) → low',pieces:[['low','</w>'],['low','</w>'],['low','e','r','</w>']],note:'(low,</w>): 2; (low,e): 1; (e,r): 1'}
+];
+let index=0;
+function render(){
+ const s=stages[index];
+ document.getElementById('step').textContent='step '+index+' of 2: '+s.name;
+ document.getElementById('pieces').textContent=s.pieces.map((p,j)=>'word '+(j+1)+': '+p.join(' | ')).join('\n');
+ document.getElementById('pieces').style.whiteSpace='pre-line';
+ document.getElementById('counts').textContent=s.note;
+ document.getElementById('next').disabled=index===stages.length-1;
+}
+document.getElementById('next').addEventListener('click',()=>{if(index<stages.length-1)index++;render();});
+document.getElementById('reset').addEventListener('click',()=>{index=0;render();});
+render();
+</script></body></html>

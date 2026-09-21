@@ -1,0 +1,31 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #f4f7fb; color: #17253b; font: 15px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; }
+.lab { max-width: 1000px; margin: 0 auto; padding: 18px; }
+h1 { font-size: 1.35rem; margin: 0 0 4px; }
+h2 { font-size: 1rem; margin: 0 0 10px; }
+p { margin: 6px 0 14px; }
+.muted { color: #45556c; }
+.grid { display: grid; grid-template-columns: minmax(230px, 1fr) minmax(320px, 1.6fr); gap: 14px; }
+.panel { background: white; border: 1px solid #d4deeb; border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px #1d385008; }
+.control { display: block; margin: 0 0 15px; font-weight: 600; }
+.control span { float: right; font-variant-numeric: tabular-nums; color: #3455a4; }
+input[type=range] { display: block; width: 100%; margin: 7px 0 0; accent-color: #3455a4; }
+input[type=checkbox] { accent-color: #3455a4; }
+select { display: block; width: 100%; padding: 7px; margin: 7px 0 15px; font: inherit; border: 1px solid #9cacbe; border-radius: 6px; background: white; }
+button { border: 1px solid #3455a4; color: #3455a4; background: #fff; border-radius: 6px; padding: 8px 13px; font: 600 14px system-ui, sans-serif; cursor: pointer; margin-right: 8px; }
+button:hover, button:focus-visible { background: #e9effa; }
+.readout { border-left: 4px solid #087f8c; background: #edf8f8; border-radius: 6px; padding: 10px 12px; margin-top: 12px; font-variant-numeric: tabular-nums; }
+.formula { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .92rem; overflow-wrap: anywhere; }
+.bars { display: grid; gap: 9px; }
+.bar-row { display: grid; grid-template-columns: 80px 1fr 48px; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.track { width: 100%; height: 20px; border-radius: 5px; background: #e6ecf4; overflow: hidden; }
+.fill { height: 100%; background: #3455a4; transition: width .15s; }
+.fill.teal { background: #087f8c; }
+.fill.orange { background: #d16b2f; }
+table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+td, th { border: 1px solid #d4deeb; padding: 7px; text-align: center; }
+th { background: #eef3f9; }
+tr.selected th { color: #244b9a; }
+canvas { display: block; width: 100%; max-width: 100%; background: white; }
+.canvas-wrap { border: 1px solid #d4deeb; border-radius: 8px; overflow: hidden; margin: 8px 0; }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } .lab { padding: 10px; } }
