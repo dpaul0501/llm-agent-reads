@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1450" height="460" viewBox="0 0 1450 460" role="img" aria-labelledby="title desc">
+  <title id="title">How token embeddings participate in Transformer training</title>
+  <desc id="desc">A forward path runs from token IDs through embedding lookup, position, Transformer blocks, vocabulary logits, softmax, and next-token loss. A backward path carries gradients from the loss to every learned component, including the selected embedding rows.</desc>
+  <defs>
+    <style>
+      .title{font:700 27px Arial,sans-serif;fill:#17253b}.label{font:700 17px Arial,sans-serif;fill:#17253b}.small{font:500 14px Arial,sans-serif;fill:#45556c}.shape{fill:#f8fbff;stroke:#3455a4;stroke-width:2}.context{fill:#f2fbfa;stroke:#087f8c;stroke-width:2}.output{fill:#fff7f0;stroke:#d16b2f;stroke-width:2}.arrow{stroke:#45556c;stroke-width:2.4;fill:none;marker-end:url(#head)}.grad{stroke:#b23a48;stroke-width:2.4;fill:none;stroke-dasharray:8 6;marker-end:url(#redhead)}
+    </style>
+    <marker id="head" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#45556c"/></marker>
+    <marker id="redhead" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#b23a48"/></marker>
+  </defs>
+  <rect width="1450" height="460" fill="#ffffff"/>
+  <text x="725" y="42" text-anchor="middle" class="title">One training path: IDs → representations → next-token loss</text>
+
+  <g transform="translate(25 100)"><rect width="135" height="105" rx="13" class="shape"/><text x="67" y="40" text-anchor="middle" class="label">Token IDs</text><text x="67" y="69" text-anchor="middle" class="small">x₀ … xₜ</text></g>
+  <path d="M160 152 H195" class="arrow"/>
+  <g transform="translate(195 100)"><rect width="165" height="105" rx="13" class="shape"/><text x="82" y="37" text-anchor="middle" class="label">Embedding table</text><text x="82" y="65" text-anchor="middle" class="small">eₜ = E[xₜ]</text><text x="82" y="87" text-anchor="middle" class="small">E ∈ ℝⱽˣᵈ</text></g>
+  <path d="M360 152 H395" class="arrow"/>
+  <g transform="translate(395 100)"><rect width="160" height="105" rx="13" class="shape"/><text x="80" y="37" text-anchor="middle" class="label">Add position</text><text x="80" y="65" text-anchor="middle" class="small">hₜ⁽⁰⁾ = eₜ + pₜ</text><text x="80" y="87" text-anchor="middle" class="small">or defer RoPE</text></g>
+  <path d="M555 152 H590" class="arrow"/>
+  <g transform="translate(590 100)"><rect width="190" height="105" rx="13" class="context"/><text x="95" y="32" text-anchor="middle" class="label">Transformer stack</text><text x="95" y="60" text-anchor="middle" class="small">attention mixes tokens</text><text x="95" y="83" text-anchor="middle" class="small">FFN mixes features</text></g>
+  <path d="M780 152 H815" class="arrow"/>
+  <g transform="translate(815 100)"><rect width="155" height="105" rx="13" class="context"/><text x="77" y="37" text-anchor="middle" class="label">Contextual state</text><text x="77" y="67" text-anchor="middle" class="small">hₜ⁽ᴸ⁾ ∈ ℝᵈ</text></g>
+  <path d="M970 152 H1005" class="arrow"/>
+  <g transform="translate(1005 100)"><rect width="145" height="105" rx="13" class="output"/><text x="72" y="37" text-anchor="middle" class="label">Vocab logits</text><text x="72" y="67" text-anchor="middle" class="small">zₜ = hₜ⁽ᴸ⁾W</text></g>
+  <path d="M1150 152 H1185" class="arrow"/>
+  <g transform="translate(1185 100)"><rect width="105" height="105" rx="13" class="output"/><text x="52" y="40" text-anchor="middle" class="label">Softmax</text><text x="52" y="69" text-anchor="middle" class="small">pₜ</text></g>
+  <path d="M1290 152 H1325" class="arrow"/>
+  <g transform="translate(1325 100)"><rect width="100" height="105" rx="13" class="output"/><text x="50" y="37" text-anchor="middle" class="label">Loss</text><text x="50" y="67" text-anchor="middle" class="small">−log pₜ[yₜ]</text></g>
+
+  <text x="725" y="250" text-anchor="middle" class="label">Forward pass computes a prediction</text>
+  <path d="M1375 305 C1170 390, 430 390, 278 305" class="grad"/>
+  <path d="M1375 305 C1150 335, 850 335, 685 305" class="grad"/>
+  <path d="M1375 305 C1260 315, 1130 315, 1080 305" class="grad"/>
+  <text x="725" y="410" text-anchor="middle" class="label" fill="#b23a48">Backpropagation sends credit or blame through the output head, blocks, and selected rows of E</text>
+  <text x="725" y="435" text-anchor="middle" class="small">Fixed sinusoidal position and standard RoPE receive no parameter update; learned position tables do.</text>
+</svg>

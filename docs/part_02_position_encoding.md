@@ -67,6 +67,63 @@ The figure below shows the same idea in geometric form: the same token is placed
 
 The exact numbers are not the final method. The point is simple: the token representation changes with its position.
 
+### How to read the three panels in this image
+
+The arrows across the image show a progression of ideas. They do **not** mean that a Transformer applies all three panels one after another. A model normally chooses an additive position method or a rotary method.
+
+#### Panel 1: linear index, or uniformly spaced position values
+
+The left panel assigns position $i$ a value that grows by the same amount at every step:
+
+$$
+p_i=c\,i,
+\qquad
+p_{i+1}-p_i=c.
+$$
+
+This is why it can be described as a uniform or linear index signal: positions 0, 1, 2, and 3 become $0,c,2c,3c$. It preserves order, but it has only one scale, grows without bound, and does not naturally turn a relative shift into a reusable phase relationship. It is a teaching baseline, not the positional encoding used in the original Transformer.
+
+#### Panel 2: additive sinusoidal encoding
+
+The middle panel replaces one growing number with a vector containing many sine/cosine pairs:
+
+$$
+PE(i)=[\sin(i\omega_0),\cos(i\omega_0),
+\sin(i\omega_1),\cos(i\omega_1),\ldots].
+$$
+
+Each pair acts like a clock hand moving at a different speed. Small $k$ gives a fast clock; large $k$ gives a slow clock. The resulting vector is added to the token embedding:
+
+$$
+h_i=e_{x_i}+PE(i).
+$$
+
+The green wave in the image represents those smooth periodic coordinates. It is schematic: the real vector contains many waves with geometrically spaced frequencies, not only the single curve that can be drawn on the page. The original fixed sinusoidal method has no learned positional parameters.
+
+#### Panel 3: RoPE
+
+The right panel moves the same phase idea inside attention. After the layer has produced a query and key, RoPE splits each into coordinate pairs and rotates pair $k$ by the position-dependent angle
+
+$$
+\theta_{i,k}=i\omega_k.
+$$
+
+Thus a query at position $i$ is rotated by $R(i\omega_k)$ and a key at position $j$ by $R(j\omega_k)$. Their dot product contains the relative angle
+
+$$
+j\omega_k-i\omega_k=(j-i)\omega_k.
+$$
+
+The orange shape is a symbolic view of vectors turning around the origin. RoPE does not translate the vector and does not add a positional vector to the token embedding. Standard RoPE also has no learned positional parameters.
+
+| panel | operation | where position enters | main geometric idea |
+|---|---|---|---|
+| linear/index | use a value proportional to $i$ | initial representation | uniform steps |
+| sinusoidal | add $PE(i)$ | before the first Transformer block | many phase clocks |
+| RoPE | rotate query/key pairs | inside each attention layer | relative angle in $QK^\top$ |
+
+The rest of this chapter derives the middle and right panels one coordinate pair at a time.
+
 ## 3. The three properties of a good positional encoding
 
 A useful positional code should satisfy three properties:

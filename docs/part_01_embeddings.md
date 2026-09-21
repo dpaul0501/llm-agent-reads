@@ -592,7 +592,234 @@ The key theme is coherence:
 
 The task is not to discover a single magical vector. It is to construct a representation that preserves meaning, context, and sequence structure.
 
-## 12. Key takeaway
+## 12. The embedding layer inside a Transformer, mathematically
+
+The earlier sections explain where embeddings came from. We can now state exactly how a Transformer uses and learns them.
+
+![The forward path from token IDs through an embedding table and Transformer to next-token loss, with gradients flowing back to the learned parameters](assets/embedding_training_pipeline.svg)
+
+### 12.1 The embedding table is a learned matrix
+
+Let:
+
+- $V$ be the vocabulary size
+- $d$ be the model width
+- $T$ be the sequence length
+- $E\in\mathbb{R}^{V\times d}$ be the token embedding matrix
+- $x_t\in\{0,\ldots,V-1\}$ be the token ID at position $t$
+
+The embedding layer performs a row lookup:
+
+$$
+e_t=E[x_t,:]\in\mathbb{R}^{d}.
+$$
+
+The same operation can be written as matrix multiplication. If $o(x_t)\in\mathbb{R}^{V}$ is the one-hot row vector for token $x_t$, then
+
+$$
+e_t=o(x_t)E.
+$$
+
+The one-hot vector contains no learned meaning. It merely selects a row. Implementations use an indexed lookup because constructing a length-$V$ one-hot vector would waste memory and computation.
+
+For a batch of token IDs $X\in\{0,\ldots,V-1\}^{B\times T}$, the lookup returns
+
+$$
+E[X]\in\mathbb{R}^{B\times T\times d}.
+$$
+
+Each of the $BT$ token occurrences now has a $d$-dimensional starting vector. If the same ID occurs several times, every occurrence starts with the same row of $E$.
+
+### 12.2 What exactly is learned in the embedding layer?
+
+The $Vd$ numbers in $E$ are trainable parameters. They usually begin as small random values. No coordinate is initially assigned a human label such as “animal,” “past tense,” or “formal language.” Training changes the rows so the entire network becomes better at its prediction objective.
+
+What a row learns is therefore operational:
+
+> $E[v,:]$ becomes a useful starting representation for token $v$ because that representation helps the later Transformer layers reduce prediction loss across all contexts where $v$ occurs.
+
+Tokens used in similar predictive contexts often receive related gradient updates, which can create semantic and syntactic geometry. That geometry is learned from the task; the lookup operation itself does not guarantee it.
+
+The individual axes are not uniquely meaningful. If the embedding space and the following learned matrices were rotated together, the network could represent the same function in a different coordinate basis. Distances, directions, and downstream behavior are usually more informative than trying to name coordinate 17.
+
+Frequency also matters. A common token contributes to many training examples and its row is updated often. A rare token receives fewer direct input-side updates. Subword tokenization helps by letting rare words share reusable pieces.
+
+### 12.3 Position turns a token row into a sequence input
+
+A lookup answers **which token is this?** It does not answer **where did it occur?** With additive position encoding, the first layer receives
+
+$$
+h_t^{(0)}=\sqrt d\,E[x_t,:]+P_t,
+$$
+
+where $P_t\in\mathbb{R}^{d}$ is either a fixed sinusoidal vector or a row from a learned position table. The scale $\sqrt d$ is the convention used in the original Transformer; architectures may vary.
+
+For the sentence “the cat sat,” the model constructs
+
+$$
+H^{(0)}=
+\begin{bmatrix}
+\sqrt d\,E[x_{\text{the}}]+P_0\\
+\sqrt d\,E[x_{\text{cat}}]+P_1\\
+\sqrt d\,E[x_{\text{sat}}]+P_2
+\end{bmatrix}
+\in\mathbb{R}^{3\times d}.
+$$
+
+The token row supplies identity-related features; $P_t$ supplies order. [Part 2](part_02_position_encoding.md) derives fixed sinusoidal encoding, learned additive positions, and RoPE. With RoPE, a model normally does not add $P_t$ here. It rotates query and key pairs later inside each attention layer.
+
+### 12.4 Attention and the FFN create contextual states
+
+The initial row for “bank” is static. It is the same lookup in “river bank” and “bank account.” Transformer blocks turn that static starting vector into a context-dependent hidden state.
+
+Using a common pre-norm decoder block notation, layer $\ell$ computes
+
+$$
+A^{(\ell)}=H^{(\ell-1)}+
+\operatorname{MHA}\!\left(\operatorname{LN}(H^{(\ell-1)})\right),
+$$
+
+$$
+H^{(\ell)}=A^{(\ell)}+
+\operatorname{FFN}\!\left(\operatorname{LN}(A^{(\ell)})\right).
+$$
+
+These two sublayers do different jobs:
+
+- multi-head attention mixes information **between token positions**
+- the feed-forward network transforms features **within each position**
+- residual connections keep the earlier representation available while adding each update
+
+After $L$ blocks, $h_t^{(L)}$ is no longer merely the row $E[x_t]$. It is a contextual representation shaped by the visible sentence. Under causal attention, position $t$ can use positions $0$ through $t$; it cannot use future positions. [Part 3](part_03_attention.md#1-why-static-embeddings-are-not-enough) begins with this exact limitation of static embeddings and derives the context-mixing operation.
+
+### 12.5 Projecting the latent state back to token space
+
+The final hidden state has width $d$, but a token prediction needs one score for every vocabulary item. A learned output projection maps from the model space back to vocabulary-sized logit space:
+
+$$
+z_t=h_t^{(L)}W_{\text{out}}+b,
+$$
+
+where
+
+$$
+W_{\text{out}}\in\mathbb{R}^{d\times V},
+\qquad
+b\in\mathbb{R}^{V},
+\qquad
+z_t\in\mathbb{R}^{V}.
+$$
+
+Coordinate $z_{t,v}$ is the unnormalized score for vocabulary token $v$. Softmax turns the logits into a probability distribution:
+
+$$
+p_t(v)=\frac{\exp(z_{t,v})}{\sum_{u=0}^{V-1}\exp(z_{t,u})}.
+$$
+
+This projection is learned; it is not a literal inverse of the embedding lookup. In a weight-tied model,
+
+$$
+W_{\text{out}}=E^\top,
+$$
+
+so a candidate token is scored using a dot product between the final contextual state and that token's embedding row. Without weight tying, input matrix $E$ and output matrix $W_{\text{out}}$ are separate learned parameters.
+
+### 12.6 The decoder-only next-token objective
+
+For decoder-only models such as GPT, the training target at position $t$ is the next token:
+
+$$
+y_t=x_{t+1}.
+$$
+
+For `the cat sat`, the aligned examples are:
+
+| visible input ending at position $t$ | target $y_t$ |
+|---|---|
+| `the` | `cat` |
+| `the cat` | `sat` |
+
+The cross-entropy loss over one sequence is
+
+$$
+\mathcal{L}
+=-\sum_{t=0}^{T-2}\log p_t(x_{t+1}).
+$$
+
+Training evaluates all eligible positions in parallel under a causal mask. Generation uses the distribution at the newest position, chooses or samples one token, appends it, and repeats.
+
+### 12.7 Encoder, decoder, and encoder-decoder predictions
+
+The embedding-to-vocabulary pattern is used with different visibility rules and targets:
+
+| architecture | what each hidden state can read | common prediction task |
+|---|---|---|
+| encoder-only, such as BERT | tokens on both sides, except intentionally hidden content | predict original tokens at masked positions through a vocabulary head |
+| decoder-only, such as GPT | only the current prefix under a causal mask | predict the next token at every position |
+| encoder-decoder, such as the original Transformer or T5 | encoder reads the source; decoder reads its target prefix and attends to encoder states | predict the next target token from source plus target prefix |
+
+An encoder does not normally emit a token merely because it is called an encoder. A task-specific output head reads selected encoder states. For masked language modeling, that head projects a masked position's final state to $V$ logits and compares the distribution with the token that was hidden.
+
+### 12.8 How the loss trains the embedding table
+
+For softmax followed by cross-entropy, the gradient at the logits has a compact form:
+
+$$
+\frac{\partial\mathcal L}{\partial z_t}
+=p_t-\operatorname{onehot}(y_t).
+$$
+
+The target coordinate receives a negative correction when its probability is too small; other coordinates receive positive corrections in proportion to their predicted probabilities. Backpropagation carries this signal through the output projection, every Transformer block, the position-combination step, and finally the embedding lookup:
+
+$$
+\frac{\partial\mathcal L}{\partial z_t}
+\longrightarrow
+\frac{\partial\mathcal L}{\partial h_t^{(L)}}
+\longrightarrow\cdots\longrightarrow
+\frac{\partial\mathcal L}{\partial h_t^{(0)}}
+\longrightarrow
+\frac{\partial\mathcal L}{\partial E[x_t,:]}.
+$$
+
+Because lookup selects rows, the input-side gradient for vocabulary row $v$ is a scatter-add over every occurrence of that ID:
+
+$$
+\frac{\partial\mathcal L}{\partial E[v,:]}
+=\sum_{t:x_t=v}\frac{\partial\mathcal L}{\partial e_t}.
+$$
+
+If the same token appears five times, those five contributions accumulate in the same row. Rows not selected on the input side receive no input-lookup gradient in that batch. With tied input/output weights, $E$ also receives an output-side gradient because every row participates in vocabulary scoring.
+
+An optimizer then updates the parameters. A plain gradient-descent step would be
+
+$$
+E\leftarrow E-\eta\frac{\partial\mathcal L}{\partial E},
+$$
+
+with learning rate $\eta$. The same loss also updates attention projections, FFN matrices, normalization parameters, and the output head. A learned additive position table receives gradients; fixed sinusoidal encoding and standard RoPE have no positional parameters to update.
+
+### 12.9 What the whole learning loop accomplishes
+
+The end-to-end chain is
+
+$$
+\text{token IDs}
+\rightarrow E[x]
+\rightarrow \text{position-aware states}
+\rightarrow \text{attention and FFNs}
+\rightarrow \text{contextual states}
+\rightarrow \text{vocabulary logits}
+\rightarrow \text{prediction loss}.
+$$
+
+Backpropagation traverses the same computation in reverse and assigns credit or blame to every learned component. The embedding table learns useful starting coordinates; attention learns how to collect context; FFNs learn feature transformations; and the output head learns how final states support token predictions.
+
+This exposes the two missing pieces that lead into the next chapters:
+
+1. A static embedding does not encode order, so [Part 2 adds or injects position](part_02_position_encoding.md).
+2. A static embedding cannot choose the context-specific sense of a token, so [Part 3 uses attention to create contextual states](part_03_attention.md#1-why-static-embeddings-are-not-enough).
+
+## 13. Key takeaway
 
 A language model is a system that learns a probability distribution over sequences.
 
@@ -618,7 +845,7 @@ Without representation, there is no meaning. Without sequence modeling, there is
 
 That is the foundation of modern LLMs.
 
-## 13. The next chapter
+## 14. The next chapter
 
 The next step is to ask:
 
