@@ -619,10 +619,44 @@ The original sinusoidal encoding and RoPE share sine/cosine frequencies, but the
 
 - **original Transformer:** add $PE(p)$ to the token representation before it enters the attention projections
 - **RoPE:** project to $Q$ and $K$ first, then rotate each pair inside those vectors
-- **additive encoding:** position can affect queries, keys, and values through the later learned projections
+- **fixed sinusoidal additive encoding:** position can affect queries, keys, and values through the later learned projections
 - **RoPE:** relative phase appears directly and algebraically in the query-key score
 
 RoPE can be viewed as a more direct relative-position inductive bias for attention. It is not simply “more complete” than the original formula: it inserts position in a different place and gives a different guarantee. The original sinusoidal code also has relative structure because a fixed offset can be represented by a linear transformation of its sine/cosine pairs, but RoPE exposes the offset $n-m$ directly in each rotated query-key dot product.
+
+### Does RoPE have learnable parameters?
+
+**Standard RoPE itself has no learnable parameters.** The frequencies
+
+$$
+\omega_k=10000^{-2k/d_h}
+$$
+
+are fixed, and the sine, cosine, and rotation values are computed from the position. RoPE does not store a learned vector for position 0, position 1, and so on.
+
+The attention layer around RoPE still has learned parameters. In particular, $W_Q$ and $W_K$ are learned during training:
+
+$$
+q_p=h_pW_Q,\qquad k_p=h_pW_K.
+$$
+
+These matrices learn **what content should become a query or key**. The parameter-free RoPE operation then rotates those query and key coordinates based on **where the content occurs**. Calling $W_Q$ and $W_K$ “RoPE parameters” would therefore mix two separate steps.
+
+The phrase **additive positional encoding** describes how position enters the representation, not whether it is learned. Two common additive versions are:
+
+| positional method | what is added to the token embedding? | learned position parameters? |
+|---|---|---:|
+| fixed sinusoidal encoding from the original Transformer | $PE(p)$ computed with sine and cosine | no |
+| learned absolute position embedding | a row $P[p]$ from a trainable table $P\in\mathbb{R}^{L_{\max}\times d}$ | yes |
+| standard RoPE | nothing is added; pairs in $Q$ and $K$ are rotated | no |
+
+For a learned additive table, training updates $P[p]$ just like an embedding row:
+
+$$
+h_p=e_{x_p}+P[p].
+$$
+
+Its parameter count is $L_{\max}d$. For example, a maximum length of 2,048 and width 768 gives $2{,}048\times768=1{,}572{,}864$ learned positional parameters. Fixed sinusoidal encoding and standard RoPE add zero positional parameters. Some later RoPE variants learn frequency-related quantities, but that is a modification of standard RoPE.
 
 ### NumPy translation of the pairwise math
 
@@ -658,9 +692,9 @@ Read the code pair by pair: `even` and `odd` hold the two coordinates of every p
 
 ### Conceptual summary
 
-- additive positional encoding: position is a vector offset
+- fixed or learned additive positional encoding: position is a vector offset
 - RoPE: position is a rotation angle in the attention space
-- shared idea: phase differences encode relative distance
+- fixed sinusoidal encoding and RoPE share the idea that phase differences can expose relative distance
 
 ## 13. A complete picture
 
