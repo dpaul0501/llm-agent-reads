@@ -132,14 +132,7 @@ Different methods solve different parts of this problem.
 
 ### Diagram: the representation pipeline
 
-```mermaid
-flowchart LR
-    A[Text: "the cat sat"] --> B[Tokenization]
-    B --> C[Encoding]
-    C --> D[Numeric representation]
-    D --> E[Language model]
-    E --> F[Next token prediction]
-```
+![Text passes through tokenization, encoding, a numeric representation, and a language model to produce a next-token prediction.](assets/representation_pipeline.svg)
 
 ## 3. What is a token?
 
